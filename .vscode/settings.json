@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+        "istream": "cpp",
+        "map": "cpp",
+        "iosfwd": "cpp",
+        "typeinfo": "cpp"
+    }
+}
