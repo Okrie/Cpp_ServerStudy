@@ -125,5 +125,78 @@ bool cSocket::StartServer()
         sz_socketbuf_[nRecvLen] = NULL;
         cout << "message received : bytes[" << nRecvLen << "], message : [" << sz_socketbuf_ << "]" << endl;
         
+        // 같은 내용을 클라이언트에게 송신
+        int nSendLen = send(socket_connect_, sz_socketbuf_, nRecvLen, 0);
+        if(nSendLen == -1)
+        {
+            cout << "[ERROR] : " << WSAGetLastError() << endl;
+            CloseSocket(socket_connect_);
+
+            // 다시 서버를 시작해 접속 요청을 받음
+            StartServer();
+            return false;
+        }
+
+        cout << "message send : bytes[" << nSendLen << "], message : [" << sz_socketbuf_ << "]" << endl;
     }
+
+    // 클라이언트 연결 종료
+    CloseSocket(socket_connect_);
+    // 릿근 소켓 연결 종료
+    CloseSocket(socket_);
+
+    cout << "Server has been closed..." << endl;
+    return true;
+}
+
+bool cSocket::Connect(const char* pszIP, int nPort)
+{
+    // 접속할 서버 정보를 저장할 구조체
+    SOCKADDR_IN stServerAddr;
+
+    char szOutMsg[MAX_BUFFER];
+    stServerAddr.sin_family = AF_INET;
+    // 접속할 서버 포트 및 IP
+    stServerAddr.sin_port = htons(nPort);
+    stServerAddr.sin_addr.s_addr = inet_addr(pszIP);
+
+    int nRet = connect(socket_, (SOCKADDR *)&stServerAddr, sizeof(sockaddr));
+    if(nRet == SOCKET_ERROR)
+    {
+        cout << "[ERROR] : " <<WSAGetLastError() << endl;
+        return false;
+    }
+
+    cout << "Connection success..." << endl;
+    while(true)
+    {
+        cout << ">>";
+        cin >> szOutMsg;
+        if(_strcmpi(szOutMsg, "quit") == 0) break;
+
+        int nSendLen = send(socket_, szOutMsg, strlen(szOutMsg), 0);
+        
+        if(nSendLen == -1)
+        {
+            cout << "[ERROR] : " << WSAGetLastError() << endl;
+            return false;
+        }
+
+        cout << "Message sended : bytes[" << nSendLen << "], message : [" << szOutMsg << "]" << endl;
+
+        int nRecvLen = recv(socket_, szOutMsg, MAX_BUFFER, 0);
+        if(nRecvLen == 0 || nRecvLen == -1)
+        {
+            cout << "[ERRER] : " << WSAGetLastError() << endl;
+            CloseSocket(socket_);
+            return false;
+        }
+
+        sz_socketbuf_[nRecvLen] = NULL;
+        cout << "Message received : bytes[" << nRecvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
+    }
+    CloseSocket(socket_);
+    cout << "Client has been terminated ... " << endl;
+    
+    return true;
 }
