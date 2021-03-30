@@ -191,6 +191,7 @@ bool cSocket::Connect(const char* pszIP, int nPort)
             CloseSocket(socket_);
             return false;
         }
+        // 받고 나서 보낼 데이터
         sz_socketbuf_[nRecvLen] = NULL;
         cout << "Message received : bytes[" << nRecvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
         

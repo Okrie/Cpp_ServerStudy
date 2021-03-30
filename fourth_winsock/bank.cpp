@@ -7,15 +7,6 @@
 
 using namespace std;
 
-class Bank{
-    private:
-        string name;
-        int banknum;
-        int bankmoney;
-    public:
-        Bank(string s, int bn, int bm) : name(s), banknum(bn), bankmoney(bm){}
-};
-
 void _init();
 void displayBank(string userName, int bankMoney);
 int moneyCalculator(int calcul, int money, int bankMoney);
