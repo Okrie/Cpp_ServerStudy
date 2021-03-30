@@ -191,9 +191,9 @@ bool cSocket::Connect(const char* pszIP, int nPort)
             CloseSocket(socket_);
             return false;
         }
-
         sz_socketbuf_[nRecvLen] = NULL;
         cout << "Message received : bytes[" << nRecvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
+        
     }
     CloseSocket(socket_);
     cout << "Client has been terminated ... " << endl;
