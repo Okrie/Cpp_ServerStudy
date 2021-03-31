@@ -28,5 +28,4 @@ class cSocket
     SOCKET socket_connect_;
     // 소켓 버퍼
     char sz_socketbuf_[MAX_BUFFER];
-    char nameId[20];
 };

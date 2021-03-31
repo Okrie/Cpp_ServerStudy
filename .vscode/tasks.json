@@ -10,6 +10,7 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${fileDirname}\\cSocket.cpp",
+                "${fileDirname}\\bank.cpp",
                 "-lws2_32"
             ],
             "options": {
