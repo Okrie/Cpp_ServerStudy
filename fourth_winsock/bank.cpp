@@ -23,7 +23,8 @@ Bank::~Bank()
 void Bank::_init()
 {
     nameId = "";
-    fileName = "C:\\c\\Cpp learn\\Cpp_ServerStudy\\data\\";
+    //fileName = "C:\\c\\Cpp learn\\Cpp_ServerStudy\\data\\";
+    fileName = "G:\\code\\GitHub\\Cpp_ServerStudy\\data\\";
     bankMoney = 0;
     bankNum = 0;
     str = "";
