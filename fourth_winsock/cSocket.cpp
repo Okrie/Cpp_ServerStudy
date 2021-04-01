@@ -124,8 +124,11 @@ bool cSocket::StartServer()
         }
 
         sz_socketbuf_[nRecvLen] = NULL;
+        //bank.bankSystem(nameId, sz_socketbuf_);
+
         cout << "message received : bytes[" << nRecvLen << "], message : [" << sz_socketbuf_ << "]" << endl;
         
+        //bank.bankSystem(nameId, sz_socketbuf_);
         // 같은 내용을 클라이언트에게 송신
         int nSendLen = send(socket_connect_, sz_socketbuf_, nRecvLen, 0);
         if(nSendLen == -1)
@@ -154,7 +157,6 @@ bool cSocket::Connect(const char* pszIP, int nPort)
 {
     // 접속할 서버 정보를 저장할 구조체
     SOCKADDR_IN stServerAddr;
-    Bank bank;
 
     char szOutMsg[MAX_BUFFER];
     stServerAddr.sin_family = AF_INET;
@@ -170,13 +172,12 @@ bool cSocket::Connect(const char* pszIP, int nPort)
     }
 
     cout << "Connection success..." << endl;
-    cout << "이름을 입력하세요 : ";
-    cin >> nameId;
+    //cout << "이름을 입력하세요 : ";
+    //cin >> nameId;
     while(true)
     {
-        bank.bankSystem(nameId, sz_socketbuf_);
-        //cout << ">>";
-        //cin >> szOutMsg;
+        cout << ">>";
+        cin >> szOutMsg;
         if(_strcmpi(szOutMsg, "quit") == 0) break;
 
         
@@ -200,7 +201,6 @@ bool cSocket::Connect(const char* pszIP, int nPort)
         // 받고 나서 보낼 데이터
         sz_socketbuf_[nRecvLen] = NULL;
 
-        //bank.bankSystem(nameId, sz_socketbuf_);
         cout << "Message received : bytes[" << nRecvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
         
     }

@@ -5,11 +5,10 @@
 #include <process.h>
 
 #include "cSocket.h"
-#include "bank.h"
 #include <Windows.h>
 
-//#define SERVER_IP "okrie.kro.kr"
-#define SERVER_IP "220.76.165.94"
+#define SERVER_IP "127.0.0.1"
+//#define SERVER_IP "220.76.165.94"
 #define SERVER_PORT 8000
 
 using namespace std;
