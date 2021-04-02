@@ -154,13 +154,11 @@ void Bank::bankSystem(const char* userName, char* sz_msg)
         
         while(!file.eof())
         {
-            cout << "????" << endl;
             getline(file, str, ',');
             strlist.push_back(str);
         }
         bankNum = stoi(strlist.at(1));
         bankMoney = stoi(strlist.at(strlist.size()-1));
-        cout << "!!!!" << endl;
     }
 
     float rateNum = randNum(1, 400, rand()%11111)/(100.0f);

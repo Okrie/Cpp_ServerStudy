@@ -122,6 +122,10 @@ bool cSocket::StartServer()
             StartServer();
             return false;
         }
+        else
+        {
+            RecvMSG(sz_socketbuf_, nRecvLen);
+        }
 
         sz_socketbuf_[nRecvLen] = NULL;
         //bank.bankSystem(nameId, sz_socketbuf_);
@@ -188,8 +192,10 @@ bool cSocket::Connect(const char* pszIP, int nPort)
             cout << "[ERROR] : " << WSAGetLastError() << endl;
             return false;
         }
-
-        cout << "Message sended : bytes[" << nSendLen << "], message : [" << szOutMsg << "]" << endl;
+        else
+        {
+            SendMSG(szOutMsg, nSendLen);
+        }
 
         int nRecvLen = recv(socket_, szOutMsg, MAX_BUFFER, 0);
         if(nRecvLen == 0 || nRecvLen == -1)
@@ -198,14 +204,31 @@ bool cSocket::Connect(const char* pszIP, int nPort)
             CloseSocket(socket_);
             return false;
         }
-        // 받고 나서 보낼 데이터
-        sz_socketbuf_[nRecvLen] = NULL;
-
-        cout << "Message received : bytes[" << nRecvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
+        else
+        {
+            RecvMSG(szOutMsg, nRecvLen);
+        }
+        
         
     }
     CloseSocket(socket_);
     cout << "Client has been terminated ... " << endl;
     
+    return true;
+}
+
+bool cSocket::SendMSG(char* szMSG, int sendLen)
+{
+    cout << "Message sended : bytes[" << sendLen << "], message : [" << szMSG << "]" << endl;
+    sz_calculator_order[sendLen] = *szMSG;
+    return true;
+}
+
+bool cSocket::RecvMSG(char* szMSG, int recvLen)
+{
+    // 받고 나서 보낼 데이터
+    sz_socketbuf_[recvLen] = NULL;
+
+    cout << "Message received : bytes[" << recvLen <<"], message : [" << sz_socketbuf_ << "]" << endl;
     return true;
 }

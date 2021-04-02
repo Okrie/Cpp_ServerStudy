@@ -19,6 +19,8 @@ class cSocket
     bool StartServer();
     // ip, port 에 해당하는 서버로 접속
     bool Connect(const char* pszIP, int nPort);
+    bool SendMSG(char* szMSG, int sendLen);
+    bool RecvMSG(char* szMSG, int sendLen);
 
     private:
     // 클라이언트 에서는 서버에 연결하기 위한 소켓
@@ -28,5 +30,6 @@ class cSocket
     SOCKET socket_connect_;
     // 소켓 버퍼
     char sz_socketbuf_[MAX_BUFFER];
+    char sz_calculator_order[MAX_BUFFER];
     char nameId[20];
 };
